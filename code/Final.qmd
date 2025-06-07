@@ -5,7 +5,7 @@ format: html
 
 Here is the link to my repository: https://github.com/brodyregan/ENVS-193DS_spring-2025_final
 
-```{rmessage=FALSE, warning=FALSE} 
+```{r message=FALSE, warning=FALSE} 
 ## Packages
 library(tidyverse) # general use
 library(here) # file organization
@@ -68,8 +68,26 @@ str(sst_clean) #display the structure of the data frame
 slice_sample(sst_clean, n = 5) #display the first 5 rows of the table
 ```
 
+## b. 
 
+```{r Visualization}
+ggplot(data = sst_clean |> mutate(year = as.numeric(as.character(year))),
+       aes(x = month,
+           y = mean_monthly_sst,
+           color = year,
+           group = year))+
+  geom_point()+
+  geom_line()+
+  scale_color_gradient(low = "lightblue", high = "black", name = "Year")+
+    labs(x = "Month",
+         y = "Mean monthly sea surface temperature (°C)",
+         color = "Year")+
+    theme_minimal()+
+    theme(panel.grid = element_blank(),
+          panel.background = element_rect(fill = "white", color = "black"))
+  
 
+```
 
 
 
