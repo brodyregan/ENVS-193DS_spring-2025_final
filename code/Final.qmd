@@ -99,4 +99,7 @@ ggplot(data = sst_clean |> #load clean data set
 # Problem 3:
 
 ## a.
-[The 0s and 1s in this data set represent species-specific or occupancy status for each next box. A value of 1 for 'sp, cs, or tm' means the box is occupied by that specie and if the value is 1 under the 'e' column, the box is empty. Biologically, this allows for analysis of the species occupying the box to gain assess habitat preference or competition. ]
+[The 0s and 1s in this data set represent species-specific or occupancy status for each next box. A value of 1 for 'sp, cs, or tm' means the box is occupied by that specie and if the value is 1 under the 'e' column, the box is empty. Biologically, this allows for analysis of the species occupying the box to gain assess habitat preference or competition.]
+
+## b. 
+[In this study, the Swift Parrots are the target species for conservation, with nesting boxes placed in a forest to promote their breeding and survival. However, Common Starlings and Tree Martins are more successfully occupying the boxes reducing the effectiveness of this plan by out competing the Swift Parrots.]
