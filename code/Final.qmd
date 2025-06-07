@@ -71,6 +71,29 @@ slice_sample(sst_clean, n = 5) #display the first 5 rows of the table
 ## b. 
 
 ```{r Visualization}
+ggplot(data = sst_clean |> #load clean data set
+         mutate(year = factor(year, levels = sort(unique(year)))),  # Ensure order
+       aes(x = month,
+           y = mean_monthly_sst,
+           group = year,
+           color = year)) +
+  geom_line() +
+  geom_point() +
+  scale_color_brewer(palette = "Blues", name = "Year") +
+    labs(x = "Month",
+         y = "Mean monthly sea surface temperature (°C)",
+         color = "Year")+
+    theme_minimal()+
+    theme(panel.grid = element_blank(),
+          panel.background = element_rect(fill = "white", color = "black"),
+          legend.position = c(0.1, 0.7),
+          legend.background = element_blank())
+  
+
+```
+
+
+
 ggplot(data = sst_clean |> mutate(year = as.numeric(as.character(year))),
        aes(x = month,
            y = mean_monthly_sst,
@@ -79,17 +102,4 @@ ggplot(data = sst_clean |> mutate(year = as.numeric(as.character(year))),
   geom_point()+
   geom_line()+
   scale_color_gradient(low = "lightblue", high = "black", name = "Year")+
-    labs(x = "Month",
-         y = "Mean monthly sea surface temperature (°C)",
-         color = "Year")+
-    theme_minimal()+
-    theme(panel.grid = element_blank(),
-          panel.background = element_rect(fill = "white", color = "black"))
-  
-
-```
-
-
-
-
 
