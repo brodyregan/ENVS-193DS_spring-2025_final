@@ -72,22 +72,22 @@ slice_sample(sst_clean, n = 5) #display the first 5 rows of the table
 
 ```{r Visualization}
 ggplot(data = sst_clean |> #load clean data set
-         mutate(year = factor(year, levels = sort(unique(year)))),  # Ensure order
-       aes(x = month,
-           y = mean_monthly_sst,
-           group = year,
-           color = year)) +
-  geom_line() +
-  geom_point() +
-  scale_color_brewer(palette = "Blues", name = "Year") +
-    labs(x = "Month",
-         y = "Mean monthly sea surface temperature (°C)",
-         color = "Year")+
-    theme_minimal()+
-    theme(panel.grid = element_blank(),
-          panel.background = element_rect(fill = "white", color = "black"),
-          legend.position = c(0.1, 0.7),
-          legend.background = element_blank())
+         mutate(year = factor(year, levels = sort(unique(year)))),  # make sure order is separated by year (to make discrete colors for the gradient)
+       aes(x = month, #set x axis months
+           y = mean_monthly_sst, #set y axis to mean monthly temperature
+           group = year, #separate by year
+           color = year)) + #make each year its own individual color
+  geom_line() + #make the lines 
+  geom_point() + #make points 
+  scale_color_brewer(palette = "Blues", name = "Year") + #create color gradient for specific years
+    labs(x = "Month", #label x axis months 
+         y = "Mean monthly sea surface temperature (°C)", #label y axis mean monthly sea surface temperature
+         color = "Year")+ #make the legend title Year
+    theme_minimal()+ #change theme to minimal 
+    theme(panel.grid = element_blank(), #remove grid
+          panel.background = element_rect(fill = "white", color = "black"), #make background white and black border
+          legend.position = c(0.1, 0.7), #position the legend in the top left corner
+          legend.background = element_blank()) #remove the black border around the legend 
   
 
 ```
