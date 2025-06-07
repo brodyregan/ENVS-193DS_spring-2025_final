@@ -12,6 +12,7 @@ library(here) # file organization
 library(gt) # creating summary tables
 library(flextable) # creating summary tables
 library(janitor) # cleaning data frames
+library(lubridate) 
 
 
 ## Data
@@ -40,8 +41,32 @@ Part 2. The ANOVA comparisons show that average nitrogen loads differed among so
 
 ## a.
 
+```{r cleaning data frame}
+sst_clean <- sst |> #create a new clean data frame 
+  mutate( #mutate function
+    date = ymd(date), #change date column to proper format
+    year = year(date), #extract year from the date column
+    month = month(date, label = TRUE, abbr = TRUE) #extract moonth from date column but abbreviate each name
+  ) |> 
+  filter(year >= 2018) |> #only keep years 2018 and more recent
+  group_by(year, month) |> #group data by year and month 
+  summarize(mean_monthly_sst = mean(temp, na.rm = TRUE), #calculate average SST for each group (year-month)
+            .groups = "drop") |>  #ungroup the results are summarizing
+  mutate( #mutate function
+    year = factor(year), #convert year into a faccot
+    month = factor(month, levels = month.abb, ordered = TRUE) #order month from Jan to Dec
+  )
+```
 
+```{r}
 
+str(sst_clean) #display the structure of the data frame
+
+```
+
+```{r}
+slice_sample(sst_clean, n = 5) #display the first 5 rows of the table
+```
 
 
 
