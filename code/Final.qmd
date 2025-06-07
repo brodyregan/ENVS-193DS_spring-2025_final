@@ -1,5 +1,52 @@
 ---
-title: "Final"
+title: "ENVS-193DS Final"
 format: html
 ---
+
+Here is the link to my repository: https://github.com/brodyregan/ENVS-193DS_spring-2025_final
+
+```{rmessage=FALSE, warning=FALSE} 
+## Packages
+library(tidyverse) # general use
+library(here) # file organization
+library(gt) # creating summary tables
+library(flextable) # creating summary tables
+library(janitor) # cleaning data frames
+
+
+## Data
+sst <- read_csv(here("data", "SST_update2023.csv")) #load SBC data set
+```
+
+
+# Problem 1: 
+
+## a. 
+[In part 1, they likely used a simple linear regression. This is because they were examining the relationship between two continuous variables. The variables are distance from head water in km and annual total nitrogen load in kg/yr. The p-value likely tested whether there was a statistically significant linear relationship between the two measured variables.
+
+In part 2, they likely used a one-way Analysis of Variance test to compare average nitrogen load based on multiple sources (categorical). The ANOVA test compares the means of a continuous response variable (nitrogen load) across multiple categorical groups.]
+
+## b. 
+[Another test that would beneficial to this analysis would be the Post-hoc comparison. ANOVA tells us that there is at least one group mean that is statistically different from the others, but does not specify which one. A post-hoc comparison would test each group of nitrogen sources indicating which ones have differences clarifying where differences in nitrogen load occur. 
+
+I would also recommend stating summary statistics for respective groups including the mean, standard error, and sample size. This would allow us to understand the magnitude and reliability of the data for each location while providing context for the situation.]
+
+## c. 
+[Part 1: The results from this simple linear regression showed that sites farther from the headwaters of the San Joaquin River tended to have higher total nitrogen loads (test statistic = ..., df = ..., p = 0.03, α = ..., sample size =...).
+
+Part 2. The ANOVA comparisons show that average nitrogen loads differed among source types (F = ..., DF = ..., p = 0.02, α = ..., sample size = ..., SS = ...) indicating that source locations plays a role in nutrient pollution levels. The post-hoc test compares each group against each other showing (diff = ..., CI = ..., p = ...)]
+
+# Problem 2:
+
+## a.
+
+
+
+
+
+
+
+
+
+
 
