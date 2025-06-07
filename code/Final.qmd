@@ -17,6 +17,7 @@ library(lubridate)
 
 ## Data
 sst <- read_csv(here("data", "SST_update2023.csv")) #load SBC data set
+nest_boxes <- read_csv(here("data", "occdist.csv"))
 ```
 
 
@@ -94,12 +95,8 @@ ggplot(data = sst_clean |> #load clean data set
 
 
 
-ggplot(data = sst_clean |> mutate(year = as.numeric(as.character(year))),
-       aes(x = month,
-           y = mean_monthly_sst,
-           color = year,
-           group = year))+
-  geom_point()+
-  geom_line()+
-  scale_color_gradient(low = "lightblue", high = "black", name = "Year")+
+  
+# Problem 3:
 
+## a.
+[The 0s and 1s in this data set represent species-specific or occupancy status for each next box. A value of 1 for 'sp, cs, or tm' means the box is occupied by that specie and if the value is 1 under the 'e' column, the box is empty. Biologically, this allows for analysis of the species occupying the box to gain assess habitat preference or competition. ]
