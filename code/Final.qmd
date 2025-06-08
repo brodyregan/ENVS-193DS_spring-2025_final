@@ -103,3 +103,65 @@ ggplot(data = sst_clean |> #load clean data set
 
 ## b. 
 [In this study, the Swift Parrots are the target species for conservation, with nesting boxes placed in a forest to promote their breeding and survival. However, Common Starlings and Tree Martins are more successfully occupying the boxes reducing the effectiveness of this plan by out competing the Swift Parrots.]
+
+## c.
+[The two "seasons" they compare are data from 2016 and 2019. In 2016, the boxes were newly deployed and by 2019 they had been well established. By 2019, the data showed that the non target birds were the main beneficiaries of the established boxes, potentially out competing the Swift Parrots.]
+
+## d. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
