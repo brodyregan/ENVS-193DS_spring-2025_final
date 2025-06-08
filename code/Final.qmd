@@ -109,6 +109,15 @@ ggplot(data = sst_clean |> #load clean data set
 
 ## d. 
 
+ 
+| Model number | Seasons  | Distance to Forest Edge |  Model  |
+|:------------:|:--------:|:-----------------------:|:-------:| 
+| 1            |  No      |        No               | Null: No predictors     
+| 2            |  Yes     |        Yes              | Saturated: All predictors    
+| 3            |  Yes     |        No               | The predictor variable is seasons          
+| 4            |  No      |        Yes              | The predictor varibale is distance to edge      
+
+
 
 
 
