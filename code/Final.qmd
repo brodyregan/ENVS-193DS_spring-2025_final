@@ -112,11 +112,36 @@ ggplot(data = sst_clean |> #load clean data set
  
 | Model number | Seasons  | Distance to Forest Edge |  Model  |
 |:------------:|:--------:|:-----------------------:|:-------:| 
-| 1            |  No      |        No               | Null: No predictors     
-| 2            |  Yes     |        Yes              | Saturated: All predictors    
-| 3            |  Yes     |        No               | The predictor variable is seasons          
-| 4            |  No      |        Yes              | The predictor varibale is distance to edge      
+| 0            |  No      |        No               | Null: No predictors     
+| 1            |  Yes     |        Yes              | Saturated: All predictors    
+| 2            |  Yes     |        No               | The predictor variable is seasons          
+| 3            |  No      |        Yes              | The predictor varibale is distance to edge      
 
+## e.
+
+```{r, results='hide', message=FALSE, warning=FALSE}
+nest_boxes_clean <- nest_boxes |> 
+  janitor::clean_names() #clean the names
+
+# model 0: null model 
+model0 <- glm(sp ~ 1, 
+              data = nest_boxes_clean, 
+              family = binomial)
+
+# model 1: saturated model 
+model1 <- glm(sp ~ season * edge_distance, 
+              data = nest_boxes_clean, 
+              family = binomial)
+# model 2: season predictor
+model2 <- glm(sp ~ season, 
+              data = nest_boxes_clean, 
+              family = binomial)
+
+# model 3: edge distance predictor
+model3 <- glm(sp ~ edge_distance, 
+              data = nest_boxes_clean, 
+              family = binomial)
+```
 
 
 
