@@ -20,7 +20,7 @@ library(ggeffects) # getting model predictions
 
 ## Data
 sst <- read_csv(here("data", "SST_update2023.csv")) #load SBC data set
-nest_boxes <- read_csv(here("data", "occdist.csv"))
+nest_boxes <- read_csv(here("data", "occdist.csv")) #load nesting data set
 ```
 
 
@@ -113,12 +113,12 @@ ggplot(data = sst_clean |> #load clean data set
 ## d. 
 
  
-| Model number | Seasons  | Distance to Forest Edge |  Model  |
-|:------------:|:--------:|:-----------------------:|:-------:| 
+| Model number | Seasons  | Distance to Forest Edge |  Model                                   |
+|:------------:|:--------:|:-----------------------:|:----------------------------------------:| 
 | 0            |  No      |        No               | Null: No predictors     
 | 1            |  Yes     |        Yes              | Saturated: All predictors    
 | 2            |  Yes     |        No               | The predictor variable is seasons          
-| 3            |  No      |        Yes              | The predictor varibale is distance to edge      
+| 3            |  No      |        Yes              | The predictor variable is distance to edge      
 
 ## e.
 
