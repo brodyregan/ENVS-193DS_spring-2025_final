@@ -15,6 +15,7 @@ library(janitor) # cleaning data frames
 library(lubridate) 
 library(DHARMa) # run diagnostics
 library(MuMIn)  # model selection
+library(ggeffects) # getting model predictions
 
 
 ## Data
@@ -126,23 +127,26 @@ nest_boxes_clean <- nest_boxes |>
   janitor::clean_names() #clean the names
 
 # model 0: null model 
-model0 <- glm(sp ~ 1, 
-              data = nest_boxes_clean, 
-              family = binomial)
+model0 <- glm(sp ~ 1, # fit glm and set null
+              data = nest_boxes_clean, # set data frame to nest boxes
+              family = binomial) #set regression for binary outcome
 
 # model 1: saturated model 
-model1 <- glm(sp ~ season * edge_distance, 
-              data = nest_boxes_clean, 
-              family = binomial)
+model1 <- glm(sp ~ season * edge_distance, # fit glm and multiply both parameters
+              data = nest_boxes_clean, # set data frame to nest boxes
+              family = binomial) #set regression for binary outcome
+
 # model 2: season predictor
-model2 <- glm(sp ~ season, 
-              data = nest_boxes_clean, 
-              family = binomial)
+model2 <- glm(sp ~ season, # fit glm and set season parameter
+              data = nest_boxes_clean, # set data frame to nest boxes
+              family = binomial) #set regression for binary outcome
+
 
 # model 3: edge distance predictor
-model3 <- glm(sp ~ edge_distance, 
-              data = nest_boxes_clean, 
-              family = binomial)
+model3 <- glm(sp ~ edge_distance, # fit glm and set edge distance parameter
+              data = nest_boxes_clean, # set data frame to nest boxes
+              family = binomial) #set regression for binary outcome
+
 ```
 
 
@@ -150,25 +154,25 @@ model3 <- glm(sp ~ edge_distance,
 
 ```{r}
 # model 0 diagnostics
-res0 <- simulateResiduals(model0)
-plot(res0)
+res0 <- simulateResiduals(model0) # create standardized residuals using the fitted model
+plot(res0) # plot the models created
 ```
 ```{r}
 # model 1 diagnostics
-res1 <- simulateResiduals(model1)
-plot(res1)
+res1 <- simulateResiduals(model1) # create standardized residuals using the fitted model
+plot(res1) # plot the models created
 ```
 
 ```{r}
 # model 2 diagnostics
-res2 <- simulateResiduals(model2)
-plot(res2)
+res2 <- simulateResiduals(model2) # create standardized residuals using the fitted model
+plot(res2) # plot the models created
 ```
 
 ```{r}
 # model 3 diagnostics
-res3 <- simulateResiduals(model3)
-plot(res3)
+res3 <- simulateResiduals(model3) # create standardized residuals using the fitted model
+plot(res3) # plot the models created
 ```
 
 
@@ -183,7 +187,16 @@ AICc(model1, # Best fit: season and edge distance
   arrange(AICc)
 ```
 
-[The best model as determined by Akaike’s Information Criterion (AIC) is Model 1.]
+[The best model as determined by Akaike’s Information Criterion (AIC) is Model 1, which included interactions between season and distance to forest edge as predictors of Swift Parrot nest box occupancy. This model had the lowest AICc, 227.03, and was at least two units stronger than the next best model. Based on the model diagnostics, there were "No significant problems detected." The QQ plot residuals showed a KS test p-value of 0.94 which is not significant and demonstrates that the residuals followed a mostly uniformed distribution. The dispersion test also showed a p-value of 0.72 also indicating that the residuals a most follow a uniform distribution. There are no significant outliers.]
+
+## h.
+```{r}
+model1_predictions <- ggpredict(
+  model1,
+  terms = c("season", "edge_distance")) 
+    
+```
+
 
 
 
