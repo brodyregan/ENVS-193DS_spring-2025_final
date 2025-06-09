@@ -197,35 +197,53 @@ model1_predictions <- ggpredict(
   rename(
     edge_distance = x,
     season = group)
-
 ```
+
 ```{r}
 ggplot(data = nest_boxes_clean,
        aes(x = edge_distance,
            y = sp,
            color = season)) + 
-  geom_jitter(width = 0.1,
-              height = 0,
-              shape = 21,
-              alpha = 0.6) + 
-  geom_pointrange(data = model1_predictions,
-                  aes(y = predicted,
-                      ymin = conf.low,
-                      ymax = conf.high)) + 
+  geom_point(size = 2,
+             alpha = 0.5,
+             shape = 21,
+             stroke = 1)+
+  geom_ribbon(data = model1_predictions,
+              aes(x = edge_distance,
+                  y = predicted,
+                  ymin = conf.low,
+                  ymax = conf.high,
+                  fill = season,
+                  group = season),
+              alpha = 0.4) + 
+  geom_line(data = model1_predictions,
+            aes(x = edge_distance,
+                y = predicted,
+                color = season,
+                group = season))+
+  scale_y_continuous(limits = c(0, 1),
+                     breaks = c(0, 0.5, 1))+
   scale_color_manual(values = c("2016" = "darkgreen",
+                                "2019" = "darkblue"))+
+  scale_fill_manual(values = c("2016" = "lightgreen",
                                 "2019" = "lightblue"))+
-   labs(x = "Distance to Forest Edge (meters)",
+  labs(x = "Distance to Forest Edge (meters)",
        y = "Probability of Swift Parrot Occupancy",
        color = "Season",
        fill = "Season") +
-   theme_minimal(base_size = 13) +
+  theme_minimal(base_size = 13) +
   theme(
     panel.grid = element_blank(),
-    panel.background = element_rect(fill = "white", color = NA)
+    panel.background = element_rect(fill = "white", color = "black")
   )
-  
-      
 ```
+
+
+## i.
+[Figure 1:  Swift Parrot nest box occupancy declines with increasing distance to the forest edge. 
+Data Source: Stojanovic et al. 2020m occdist.csv
+Lines represent the predicted probability of Swift Parrot occupancy across a range of distance to forest edge (meters), with separate curves for each season (2016 and 2019). Shaded ribbons represent a 95% confidence interval for their respective curves. Hollow points represent individual observations of occupancy (1 = occupied, 0 = unoccupied). Colors represent season (2016 = green, 2019 = blue)]
+
 
 
 
