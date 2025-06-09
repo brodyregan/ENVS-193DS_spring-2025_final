@@ -13,6 +13,8 @@ library(gt) # creating summary tables
 library(flextable) # creating summary tables
 library(janitor) # cleaning data frames
 library(lubridate) 
+library(DHARMa) # run diagnostics
+library(MuMIn)  # model selection
 
 
 ## Data
@@ -144,9 +146,44 @@ model3 <- glm(sp ~ edge_distance,
 ```
 
 
+## f.
+
+```{r}
+# model 0 diagnostics
+res0 <- simulateResiduals(model0)
+plot(res0)
+```
+```{r}
+# model 1 diagnostics
+res1 <- simulateResiduals(model1)
+plot(res1)
+```
+
+```{r}
+# model 2 diagnostics
+res2 <- simulateResiduals(model2)
+plot(res2)
+```
+
+```{r}
+# model 3 diagnostics
+res3 <- simulateResiduals(model3)
+plot(res3)
+```
 
 
+## g.
 
+```{r}
+AICc(model1, # Best fit: season and edge distance 
+     model2,
+     model3,
+     model0) |> 
+  # arranging output in descending order of AIC
+  arrange(AICc)
+```
+
+[The best model as determined by Akaike’s Information Criterion (AIC) is Model 1.]
 
 
 
