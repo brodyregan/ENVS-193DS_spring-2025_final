@@ -9,7 +9,7 @@ format:
     toc-floating: true # enable floating
 ---
 
-Here is the link to my repository: https://github.com/brodyregan/ENVS-193DS_spring-2025_final
+[View this repository on GitHub](https://github.com/brodyregan/ENVS-193DS_spring-2025_final)
 
 ```{r message=FALSE, warning=FALSE} 
 ## Packages
@@ -25,8 +25,8 @@ library(ggeffects) # getting model predictions
 
 
 ## Data
-sst <- read_csv(here("data", "SST_update2023.csv")) #load SBC data set
-nest_boxes <- read_csv(here("data", "occdist.csv")) #load nesting data set
+sst <- read_csv(here("../data/SST_update2023.csv")) #load SBC data set
+nest_boxes <- read_csv("../data/occdist.csv") #load nesting data set
 ```
 
 
