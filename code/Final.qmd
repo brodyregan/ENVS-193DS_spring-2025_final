@@ -1,6 +1,11 @@
 ---
 title: "ENVS-193DS Final"
 format: html
+author: "Brody Regan"
+date: "6/11/2025"
+ toc: true # create toc
+    toc-location: left # move to the left
+    toc-floating: true # enable floating
 ---
 
 Here is the link to my repository: https://github.com/brodyregan/ENVS-193DS_spring-2025_final
@@ -32,14 +37,14 @@ nest_boxes <- read_csv(here("data", "occdist.csv")) #load nesting data set
 In part 2, they likely used a one-way Analysis of Variance test to compare average nitrogen load based on multiple sources (categorical). The ANOVA test compares the means of a continuous response variable (nitrogen load) across multiple categorical groups.]
 
 ## b. 
-[Another test that would beneficial to this analysis would be the Post-hoc comparison. ANOVA tells us that there is at least one group mean that is statistically different from the others, but does not specify which one. A post-hoc comparison would test each group of nitrogen sources indicating which ones have differences clarifying where differences in nitrogen load occur. 
+[Another test that would beneficial to this analysis would be the Post-hoc comparison. ANOVA tells us that there is at least one group mean that is statistically different from the others, but does not specify which one. A post-hoc comparison would test each group of nitrogen sources against each other indicating differences in where major nitrogen load occurs. 
 
 I would also recommend stating summary statistics for respective groups including the mean, standard error, and sample size. This would allow us to understand the magnitude and reliability of the data for each location while providing context for the situation.]
 
 ## c. 
-[Part 1: The results from this simple linear regression showed that sites farther from the headwaters of the San Joaquin River tended to have higher total nitrogen loads (test statistic = ..., df = ..., p = 0.03, α = ..., sample size =...).
+[Part 1: The results from this simple linear regression showed that sites farther from the headwaters on the San Joaquin River tended to have higher total nitrogen loads (test statistic = ..., df = ..., p = 0.03, α = ..., sample size =...). This pattern likely reflects input of nitrogen from runoff and other anthropogenic sources which accumulates as the water moves downstream. 
 
-Part 2. The ANOVA comparisons show that average nitrogen loads differed among source types (F = ..., DF = ..., p = 0.02, α = ..., sample size = ..., SS = ...) indicating that source locations plays a role in nutrient pollution levels. The post-hoc test compares each group against each other showing (diff = ..., CI = ..., p = ...)]
+Part 2. The ANOVA comparisons show that average nitrogen loads differed among source types (F = ..., DF = ..., p = 0.02, α = ..., sample size = ..., SS = ...). This suggests that different land uses contribute variably to nitrogen pollution levels. The post-hoc test compares each group against each other showing (diff = ..., CI = ..., p = ...) indicating that specific sources could be targeted to help reduce the nitrogen load.]
 
 # Problem 2:
 
@@ -83,7 +88,7 @@ ggplot(data = sst_clean |> #load clean data set
            color = year)) + #make each year its own individual color
   geom_line() + #make the lines 
   geom_point() + #make points 
-  scale_color_brewer(palette = "Blues", name = "Year") + #create color gradient for specific years
+  scale_color_brewer(palette = "Blues", name = "Year") + #create color gradient for specific years, had to use brewer to get proper legend configuration
     labs(x = "Month", #label x axis months 
          y = "Mean monthly sea surface temperature (°C)", #label y axis mean monthly sea surface temperature
          color = "Year")+ #make the legend title Year
@@ -102,7 +107,7 @@ ggplot(data = sst_clean |> #load clean data set
 # Problem 3:
 
 ## a.
-[The 0s and 1s in this data set represent species-specific or occupancy status for each next box. A value of 1 for 'sp, cs, or tm' means the box is occupied by that specie and if the value is 1 under the 'e' column, the box is empty. Biologically, this allows for analysis of the species occupying the box to gain assess habitat preference or competition.]
+[The 0s and 1s in this data set represent species-specific or occupancy status for each next box. A value of 1 for 'sp, cs, or tm' means the box is occupied by that species and if the value is 1 under the 'e' column, the box is empty. Biologically, this allows for analysis of the species occupying the box to assess habitat preference or competition.]
 
 ## b. 
 [In this study, the Swift Parrots are the target species for conservation, with nesting boxes placed in a forest to promote their breeding and survival. However, Common Starlings and Tree Martins are more successfully occupying the boxes reducing the effectiveness of this plan by out competing the Swift Parrots.]
@@ -187,68 +192,68 @@ AICc(model1, # Best fit: season and edge distance
   arrange(AICc)
 ```
 
-[The best model as determined by Akaike’s Information Criterion (AIC) is Model 1, which included interactions between season and distance to forest edge as predictors of Swift Parrot nest box occupancy. This model had the lowest AICc, 227.03, and was at least two units stronger than the next best model. Based on the model diagnostics, there were "No significant problems detected." The QQ plot residuals showed a KS test p-value of 0.94 which is not significant and demonstrates that the residuals followed a mostly uniformed distribution. The dispersion test also showed a p-value of 0.72 also indicating that the residuals a most follow a uniform distribution. There are no significant outliers.]
+[The best model as determined by Akaike’s Information Criterion (AIC) is Model 1, which included interactions between season and distance to forest edge as predictors of Swift Parrot nest box occupancy. This model had the lowest AICc, 227.03, and was at least two units stronger than the next best model. Based on the model diagnostics, there were "No significant problems detected." The QQ plot residuals showed a KS test p-value of 0.94 which is not significant and demonstrates that the residuals followed a mostly uniformed distribution. The dispersion test also showed a p-value of 0.72 also indicating that the residuals a most follow a uniform distribution. There were no significant outliers.]
 
 ## h.
 ```{r}
-model1_predictions <- ggpredict(
-  model1,
-  terms = c("edge_distance", "season")) |> 
+model1_predictions <- ggpredict( # create new object
+  model1, #load data set
+  terms = c("edge_distance", "season")) |> #choose terms to look at
   rename(
-    edge_distance = x,
-    season = group)
+    edge_distance = x, #set edge distance to x (in the predictions tab)
+    season = group) # make season equal group so sp is the predicted value
 ```
 
 ```{r}
-ggplot(data = nest_boxes_clean,
-       aes(x = edge_distance,
-           y = sp,
-           color = season)) + 
-  geom_point(size = 2,
-             alpha = 0.5,
-             shape = 21,
-             stroke = 1)+
-  geom_ribbon(data = model1_predictions,
-              aes(x = edge_distance,
-                  y = predicted,
-                  ymin = conf.low,
-                  ymax = conf.high,
-                  fill = season,
-                  group = season),
-              alpha = 0.4) + 
-  geom_line(data = model1_predictions,
-            aes(x = edge_distance,
-                y = predicted,
-                color = season,
-                group = season))+
-  scale_y_continuous(limits = c(0, 1),
-                     breaks = c(0, 0.5, 1))+
-  scale_color_manual(values = c("2016" = "darkgreen",
-                                "2019" = "darkblue"))+
-  scale_fill_manual(values = c("2016" = "lightgreen",
-                                "2019" = "lightblue"))+
-  labs(x = "Distance to Forest Edge (meters)",
-       y = "Probability of Swift Parrot Occupancy",
-       color = "Season",
-       fill = "Season") +
-  theme_minimal(base_size = 13) +
+ggplot(data = nest_boxes_clean, #load dataset
+       aes(x = edge_distance, #set x axis variable
+           y = sp, #set y axis to sp occupancy  
+           color = season)) + #color by season
+  geom_point(size = 2, #set point size to 2
+             alpha = 0.5, # change the transparency 
+             shape = 21, #create hollow point
+             stroke = 1)+ #increase stroke thickness
+  geom_ribbon(data = model1_predictions, #create ribbon (outside of regression)
+              aes(x = edge_distance, #set x variable to edge distance
+                  y = predicted, # set y variable to predicted
+                  ymin = conf.low, #set the lower bound of the CI
+                  ymax = conf.high, #set the upper bound of the CI
+                  fill = season, #make the fill color match the season
+                  group = season), #the groups are season
+              alpha = 0.4) + #make the ribbons more transparent 
+  geom_line(data = model1_predictions, #create linear regression  
+            aes(x = edge_distance, #set x to edge distance
+                y = predicted, #set y to predicted 
+                color = season, # color by group
+                group = season))+ # group is equal to season 
+  scale_y_continuous(limits = c(0, 1), # set y axis boundary 
+                     breaks = c(0, 0.5, 1))+ #set the marker points
+  scale_color_manual(values = c("2016" = "darkgreen", #make linear line and points dark green 
+                                "2019" = "darkblue"))+ #make linear line and points dark blue
+  scale_fill_manual(values = c("2016" = "lightgreen", #make the ribbon light green
+                                "2019" = "lightblue"))+ #make the ribbon light blue
+  labs(x = "Distance to Forest Edge (meters)", #set x axis label to Distance to Forest Edge (meters)
+       y = "Probability of Swift Parrot Occupancy", #set y axis label to Probability of Swift Parrot Occupancy 
+       color = "Season", #set legend colors
+       fill = "Season") + #set legen fill
+  theme_minimal(base_size = 13) + #change theme to minimal 
   theme(
-    panel.grid = element_blank(),
-    panel.background = element_rect(fill = "white", color = "black")
+    panel.grid = element_blank(), #remove grid
+    panel.background = element_rect(fill = "white", color = "black") #make background white and border black 
   )
 ```
 
 
 ## i.
 [Figure 1:  Swift Parrot nest box occupancy declines with increasing distance to the forest edge. 
-Data Source: Stojanovic et al. 2020m occdist.csv
-Lines represent the predicted probability of Swift Parrot occupancy across a range of distance to forest edge (meters), with separate curves for each season (2016 and 2019). Shaded ribbons represent a 95% confidence interval for their respective curves. Hollow points represent individual observations of occupancy (1 = occupied, 0 = unoccupied). Colors represent season (2016 = green, 2019 = blue)]
+Data Source: Stojanovic et al. 2020 occdist.csv, https://doi.org/10.5061/dryad.83bk3j9sb
+Lines represent the predicted probability of Swift Parrot occupancy across a range of distances to forest edge (meters), with separate curves for each season (2016 and 2019). Shaded ribbons represent a 95% confidence interval for their respective curves. Hollow points represent individual observations of occupancy (1 = occupied, 0 = unoccupied). Colors represent season (2016 = green, 2019 = blue)]
 
 ## j. 
 
 ```{r}
-predicted_probs <- ggpredict(
-  model1,
+predicted_probs <- ggpredict( #create new object
+  model1, #load data set
   terms = c("edge_distance [0,900]", "season")  # set two specific distances by season
 )
 
@@ -256,9 +261,21 @@ print(predicted_probs) #view results
 ```
 
 ## k. 
-[In 2016 and 2019, Swift Parrots were more likely to occupy nest boxes located closer to the edge of the forest (0 meters) than those farther away (900m). In 2016, the predicted probability of occupancy at the edge of the forest was 0.54 (95% CI: 0.36, 0.72), and at 900 meters was 0.09 (95% CI: 0.04, 0.22). In 2019, the trend was similar but with lower probabilities with 0.24 (95% CI: 0.13, 0.42) at 0 meters and 0.09 (95% CI: 0.03, 0.23) at 900 meters. 
-Figure 1 also illustrates the decline in occupancy as distance from the edge increases as seen in both curves sloping down and to the right. This trend was more prominent in 2016. Biologically, this trend may indicate that Sw]
+[In 2016 and 2019, Swift Parrots were more likely to occupy nest boxes located closer to the edge of the forest (0 meters) than those farther away (900m). In 2016, the predicted probability of occupancy at the edge of the forest was 0.54 (95% CI: 0.36, 0.72), and at 900 meters was 0.09 (95% CI: 0.04, 0.22). In 2019, the trend was similar but with lower probabilities with 0.24 (95% CI: 0.13, 0.42) at 0 meters and 0.09 (95% CI: 0.03, 0.23) at 900 meters, indicating a decrease in Swift Parrot Occupancy. 
+
+Figure 1 also illustrates the decline in Swift Parrot occupancy as distance from the edge increases as seen in both curves sloping down and to the right. This trend was more prominent in 2016. Biologically, this pattern may indicate that Swift Parrots are being out competed because from 2016 to 2019, the Starlings increased occupancy rates closer to the edge of the forest while Swift Parrot rates declined.]
 
 
+# Problem 4.
+
+## a. 
+
+[My visualizations are much different in that I began (in HW 2) representing the data in a way that showed specific data points and values that were quantitative (bar and box/whisker plots). My affective visualization on the other hand had no quantitative data and included colors and shapes to convey values.
+
+Some similarities between all of my visualizations are that they all include geometric rectangles to show the duration of practice. Each figure includes my response variable, hours practiced. The affective visualization is also similar to my first figure in HW 2 because they both include what instrument was practiced.
+
+The most prominent trend I see throughout the visualizations is that on average, I practiced drums for the longest amount of time. The box plot for drums was clearly higher than the other instruments, and the affective visualization mostly had brightly red colors indicating the same trend. The other variables included in each plot were different (ex. meals ate, time on campus, etc.) so it is hard to tell how those trends relate to each other. 
+
+I received full points and no suggestions for my affective visualization, but there was still room for improvement. To make the visual more intuitive, I switched each instrument to darker colors so they could be differentiated when placed next to each other. I could also incorporate another variable into the visualization, 'hours on campus,' using the same concept for the 'Meals Ate' variable which is placing an shape on each respective strip with its size correlating to the amount of meals ate/time.]
 
 
