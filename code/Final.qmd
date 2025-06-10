@@ -1,9 +1,10 @@
 ---
 title: "ENVS-193DS Final"
-format: html
 author: "Brody Regan"
 date: "6/11/2025"
- toc: true # create toc
+format: 
+  html:
+    toc: true # create toc
     toc-location: left # move to the left
     toc-floating: true # enable floating
 ---
@@ -17,7 +18,7 @@ library(here) # file organization
 library(gt) # creating summary tables
 library(flextable) # creating summary tables
 library(janitor) # cleaning data frames
-library(lubridate) 
+library(lubridate) # organize dates and time
 library(DHARMa) # run diagnostics
 library(MuMIn)  # model selection
 library(ggeffects) # getting model predictions
@@ -195,7 +196,7 @@ AICc(model1, # Best fit: season and edge distance
 [The best model as determined by Akaike’s Information Criterion (AIC) is Model 1, which included interactions between season and distance to forest edge as predictors of Swift Parrot nest box occupancy. This model had the lowest AICc, 227.03, and was at least two units stronger than the next best model. Based on the model diagnostics, there were "No significant problems detected." The QQ plot residuals showed a KS test p-value of 0.94 which is not significant and demonstrates that the residuals followed a mostly uniformed distribution. The dispersion test also showed a p-value of 0.72 also indicating that the residuals a most follow a uniform distribution. There were no significant outliers.]
 
 ## h.
-```{r}
+```{r  message=FALSE, warning=FALSE}
 model1_predictions <- ggpredict( # create new object
   model1, #load data set
   terms = c("edge_distance", "season")) |> #choose terms to look at
@@ -205,6 +206,10 @@ model1_predictions <- ggpredict( # create new object
 ```
 
 ```{r}
+nest_boxes_clean$season <- as.factor(nest_boxes_clean$season) #convert season to a factor in clean data set
+model1_predictions$season <- as.factor(model1_predictions$season) #convert season to a factor in predicitions
+
+
 ggplot(data = nest_boxes_clean, #load dataset
        aes(x = edge_distance, #set x axis variable
            y = sp, #set y axis to sp occupancy  
@@ -230,8 +235,8 @@ ggplot(data = nest_boxes_clean, #load dataset
                      breaks = c(0, 0.5, 1))+ #set the marker points
   scale_color_manual(values = c("2016" = "darkgreen", #make linear line and points dark green 
                                 "2019" = "darkblue"))+ #make linear line and points dark blue
-  scale_fill_manual(values = c("2016" = "lightgreen", #make the ribbon light green
-                                "2019" = "lightblue"))+ #make the ribbon light blue
+  scale_fill_manual(values = c("2016" = "lightgreen",  #make the ribbon light green
+                                "2019" = "lightblue"))+  #make the ribbon light blue
   labs(x = "Distance to Forest Edge (meters)", #set x axis label to Distance to Forest Edge (meters)
        y = "Probability of Swift Parrot Occupancy", #set y axis label to Probability of Swift Parrot Occupancy 
        color = "Season", #set legend colors
@@ -242,7 +247,6 @@ ggplot(data = nest_boxes_clean, #load dataset
     panel.background = element_rect(fill = "white", color = "black") #make background white and border black 
   )
 ```
-
 
 ## i.
 [Figure 1:  Swift Parrot nest box occupancy declines with increasing distance to the forest edge. 
