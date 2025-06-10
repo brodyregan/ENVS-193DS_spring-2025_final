@@ -244,9 +244,20 @@ ggplot(data = nest_boxes_clean,
 Data Source: Stojanovic et al. 2020m occdist.csv
 Lines represent the predicted probability of Swift Parrot occupancy across a range of distance to forest edge (meters), with separate curves for each season (2016 and 2019). Shaded ribbons represent a 95% confidence interval for their respective curves. Hollow points represent individual observations of occupancy (1 = occupied, 0 = unoccupied). Colors represent season (2016 = green, 2019 = blue)]
 
+## j. 
 
+```{r}
+predicted_probs <- ggpredict(
+  model1,
+  terms = c("edge_distance [0,900]", "season")  # set two specific distances by season
+)
 
+print(predicted_probs) #view results
+```
 
+## k. 
+[In 2016 and 2019, Swift Parrots were more likely to occupy nest boxes located closer to the edge of the forest (0 meters) than those farther away (900m). In 2016, the predicted probability of occupancy at the edge of the forest was 0.54 (95% CI: 0.36, 0.72), and at 900 meters was 0.09 (95% CI: 0.04, 0.22). In 2019, the trend was similar but with lower probabilities with 0.24 (95% CI: 0.13, 0.42) at 0 meters and 0.09 (95% CI: 0.03, 0.23) at 900 meters. 
+Figure 1 also illustrates the decline in occupancy as distance from the edge increases as seen in both curves sloping down and to the right. This trend was more prominent in 2016. Biologically, this trend may indicate that Sw]
 
 
 
